@@ -5,7 +5,7 @@ import urllib.parse
 
 st.set_page_config(page_title="Asad Official - eBay VIP Generator", page_icon="🚀", layout="wide")
 
-st.title("🚀 Asad Official - eBay VIP Listing Generator")
+st.title("🚀 ᴀSᴀᴅㅤᴏҒҒɪᴄᴀʟ - eBay VIP Listing Generator")
 st.caption("Amazon link paste karein aur premium animated HTML code hasil karein.")
 
 try:
@@ -44,12 +44,15 @@ if st.button("✨ Generate VIP Listing Code"):
         with st.spinner("💎 Extrapolating premium data..."):
             try:
                 genai.configure(api_key=api_key)
-                # CHANGE: Updated model name to one that is guaranteed to be found
-                model = genai.GenerativeModel('gemini-pro') 
+                
+                # ---> MAIN FIX: USE THE LATEST 1.5 PRO MODEL <---
+                model = genai.GenerativeModel('gemini-1.5-pro') 
                 
                 prompt = f"Write eBay HTML for '{product_data_to_process}'. Colors: --brand-color: {selected_colors['brand']}; --accent-glow: {selected_colors['accent']}; --premium-black: {selected_colors['black']}; --soft-bg: {selected_colors['soft']}; Use .hero-section, .product-intro, .grid-layout, .info-terminal, .usage-box, .trust-bar. Return ONLY HTML."
+                
                 response = model.generate_content(prompt)
                 generated_html = re.sub(r'^```html\s*|```$', '', response.text, flags=re.MULTILINE)
+                
                 st.success("🎉 Your VIP eBay Listing Code is Ready!")
                 st.components.v1.html(generated_html, height=1200, scrolling=True)
                 st.text_area("Copy your code:", value=generated_html, height=600)
