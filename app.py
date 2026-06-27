@@ -5,7 +5,7 @@ import urllib.parse
 
 st.set_page_config(page_title="Asad Official - eBay VIP Generator", page_icon="🚀", layout="wide")
 
-st.title("🚀 ᴀSᴀᴅㅤᴏҒҒɪᴄᴀʟ - eBay VIP Listing Generator")
+st.title("🚀 Asad Official - eBay VIP Listing Generator")
 st.caption("Amazon link paste karein aur premium animated HTML code hasil karein.")
 
 try:
