@@ -24,7 +24,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Main Website Header
-st.title("🚀 [Apka Naam] - eBay VIP Listing Generator")
+st.title("🚀 [ᴀSᴀᴅㅤᴏҒҒɪᴄᴀʟ] - eBay VIP Listing Generator")
 st.caption("Amazon link paste karein aur premium animated HTML code hasil karein.")
 
 # Sidebar API Key
