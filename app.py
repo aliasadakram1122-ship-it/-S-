@@ -5,10 +5,9 @@ import urllib.parse
 
 st.set_page_config(page_title="Asad Official - eBay VIP Generator", page_icon="🚀", layout="wide")
 
-st.title("🚀 ᴀSᴀᴅㅤᴏҒҒɪᴄᴀʟ - eBay VIP Listing Generator")
+st.title("🚀 Asad Official - eBay VIP Listing Generator")
 st.caption("Amazon link paste karein aur premium animated HTML code hasil karein.")
 
-# یہ لائن آپ کی چابی کو محفوظ جگہ سے اٹھائے گی
 try:
     api_key = st.secrets["GEMINI_API_KEY"]
 except:
@@ -43,11 +42,16 @@ if product_url:
 if st.button("✨ Generate VIP Listing Code"):
     if product_data_to_process:
         with st.spinner("💎 Extrapolating premium data..."):
-            genai.configure(api_key=api_key)
-            model = genai.GenerativeModel('gemini-1.5-flash')
-            prompt = f"Write eBay HTML for '{product_data_to_process}'. Colors: --brand-color: {selected_colors['brand']}; --accent-glow: {selected_colors['accent']}; --premium-black: {selected_colors['black']}; --soft-bg: {selected_colors['soft']}; Use .hero-section, .product-intro, .grid-layout, .info-terminal, .usage-box, .trust-bar. Return ONLY HTML."
-            response = model.generate_content(prompt)
-            generated_html = re.sub(r'^```html\s*|```$', '', response.text, flags=re.MULTILINE)
-            st.success("🎉 Your VIP eBay Listing Code is Ready!")
-            st.components.v1.html(generated_html, height=1200, scrolling=True)
-            st.text_area("Copy your code:", value=generated_html, height=600)
+            try:
+                genai.configure(api_key=api_key)
+                # CHANGE: Updated model name to one that is guaranteed to be found
+                model = genai.GenerativeModel('gemini-pro') 
+                
+                prompt = f"Write eBay HTML for '{product_data_to_process}'. Colors: --brand-color: {selected_colors['brand']}; --accent-glow: {selected_colors['accent']}; --premium-black: {selected_colors['black']}; --soft-bg: {selected_colors['soft']}; Use .hero-section, .product-intro, .grid-layout, .info-terminal, .usage-box, .trust-bar. Return ONLY HTML."
+                response = model.generate_content(prompt)
+                generated_html = re.sub(r'^```html\s*|```$', '', response.text, flags=re.MULTILINE)
+                st.success("🎉 Your VIP eBay Listing Code is Ready!")
+                st.components.v1.html(generated_html, height=1200, scrolling=True)
+                st.text_area("Copy your code:", value=generated_html, height=600)
+            except Exception as e:
+                st.error(f"❌ API Error: {str(e)}")
