@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import urllib.parse
 
 # Page Configuration (Aap ke naam se)
-st.set_page_config(page_title="[Apka Naam] - eBay VIP Generator", page_icon="🚀", layout="wide")
+st.set_page_config(page_title="[ᴀSᴀᴅㅤᴏҒҒɪᴄᴀʟ] - eBay VIP Generator", page_icon="🚀", layout="wide")
 
 st.markdown("""
     <style>
