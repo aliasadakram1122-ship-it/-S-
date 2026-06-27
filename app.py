@@ -41,19 +41,30 @@ if product_url:
 
 if st.button("✨ Generate VIP Listing Code"):
     if product_data_to_process:
-        with st.spinner("💎 Extrapolating premium data..."):
+        with st.spinner("💎 Extrapolating premium data and scanning available AI models..."):
             try:
                 genai.configure(api_key=api_key)
                 
-                # ---> MAIN FIX: USE THE LATEST 1.5 PRO MODEL <---
-                model = genai.GenerativeModel('gemini-1.5-pro') 
+                # --- AUTO-DETECT WORKING MODEL ---
+                working_model_name = None
+                for m in genai.list_models():
+                    if 'generateContent' in m.supported_generation_methods:
+                        working_model_name = m.name
+                        break # Jo pehla chalne wala model mil jaye, usay select kar lo
+                
+                if not working_model_name:
+                    st.error("❌ Google ka koi bhi text model is waqt available nahi hai!")
+                    st.stop()
+                
+                # --- RUN AI WITH DETECTED MODEL ---
+                model = genai.GenerativeModel(working_model_name) 
                 
                 prompt = f"Write eBay HTML for '{product_data_to_process}'. Colors: --brand-color: {selected_colors['brand']}; --accent-glow: {selected_colors['accent']}; --premium-black: {selected_colors['black']}; --soft-bg: {selected_colors['soft']}; Use .hero-section, .product-intro, .grid-layout, .info-terminal, .usage-box, .trust-bar. Return ONLY HTML."
                 
                 response = model.generate_content(prompt)
                 generated_html = re.sub(r'^```html\s*|```$', '', response.text, flags=re.MULTILINE)
                 
-                st.success("🎉 Your VIP eBay Listing Code is Ready!")
+                st.success(f"🎉 VIP eBay Listing Code is Ready! (Model used: {working_model_name})")
                 st.components.v1.html(generated_html, height=1200, scrolling=True)
                 st.text_area("Copy your code:", value=generated_html, height=600)
             except Exception as e:
